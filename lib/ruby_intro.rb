@@ -51,21 +51,35 @@ end
 
 def starts_with_consonant? s
   # YOUR CODE HERE
-  return false if !s.is_a?(String)
-  is_match = /[aeiou]/.match(s[0])
-  if is_match != nil
-    return false
-  else
-    return true
-  end
+  return false if !s.is_a?(String) || s.empty?
+  !(/\A[aeiou]/i.match(s[0]) || /\A[^a-z]/i.match(s[0]))
 end
 
 def binary_multiple_of_4? s
   # YOUR CODE HERE
+  return true if s == '0'
+  /^[10]*00$/.match(s) != nil
 end
 
 # Part 3
 
 class BookInStock
 # YOUR CODE HERE
+  attr_accessor :isbn
+  attr_writer :price
+  def initialize(isbn,price)
+    raise ArgumentError, 'Isbn cannot be empty' if isbn.to_s.strip.empty?
+    raise ArgumentError, 'Price cannot be less than or equal to zero' if price <= 0
+    @isbn = isbn
+    @price = price
+  end
+  def price_as_string
+     return "$"+format('%.2f', @price)
+  end
+  def isbn
+    return @isbn
+  end
+  def price
+    return @price
+  end
 end
